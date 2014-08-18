@@ -1,0 +1,20 @@
+{
+  "name": "vega-prime",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main":"index.js",
+  "devDependencies": {
+    "coffee-script":"~1.7",
+    "browserify":"~5.10",
+    "chai": "~1.9",
+    "mocha":"~1.18",
+    "sinon":"~1.9",
+    "sinon-chai":"~2.5",
+    "uglify-js":"~2.4"
+  },
+  "scripts": {
+    "build":"coffee -o . -c coffee && browserify bundle.js -o vega-prime.bundle.js && uglifyjs vega-prime.bundle.js -o vega-prime.bundle.min.js",
+    "build-test":"coffee -o ./test -c test/coffee",
+    "test":"npm run build && npm run build-test && mocha test -R spec"
+  }
+}
