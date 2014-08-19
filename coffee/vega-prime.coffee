@@ -8,7 +8,14 @@ class VegaPrime
         roomId: @options.roomId
         badge: @options.badge
 
+      @_setCallbacks()
+
   init: ->
     @observatory.call()
+
+  _setCallbacks: ->
+    @observatory.on 'callAccepted', (peers) =>
+      peers.forEach (peer) =>
+        @observatory.createOffer peer.peerId
 
 module.exports = VegaPrime

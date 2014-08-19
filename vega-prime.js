@@ -12,10 +12,21 @@
         roomId: this.options.roomId,
         badge: this.options.badge
       });
+      this._setCallbacks();
     }
 
     VegaPrime.prototype.init = function() {
       return this.observatory.call();
+    };
+
+    VegaPrime.prototype._setCallbacks = function() {
+      return this.observatory.on('callAccepted', (function(_this) {
+        return function(peers) {
+          return peers.forEach(function(peer) {
+            return _this.observatory.createOffer(peer.peerId);
+          });
+        };
+      })(this));
     };
 
     return VegaPrime;
