@@ -39,6 +39,8 @@
 
     MockObservatory.prototype.createOffer = function() {};
 
+    MockObservatory.prototype.createAnswer = function() {};
+
     return MockObservatory;
 
   })();
@@ -73,16 +75,16 @@
     });
     return describe('observatory callbacks', function() {
       beforeEach(function() {
-        var peer1, peer2;
-        peer1 = {
+        var peer2;
+        this.peer1 = {
           peerId: 'peerId1'
         };
         peer2 = {
           peerId: 'peerId2'
         };
-        return this.peers = [peer1, peer2];
+        return this.peers = [this.peer1, peer2];
       });
-      return it('creates an offer for all peers in the payload', function() {
+      it('creates an offer for all peers in the payload', function() {
         var createOffer;
         createOffer = sinon.collection.spy(this.observatory, 'createOffer');
         this.observatory.trigger('callAccepted', this.peers);
@@ -91,6 +93,12 @@
             return expect(createOffer).to.have.been.calledWith(peer.peerId);
           };
         })(this));
+      });
+      return it('creates an answer for an offering peer', function() {
+        var createAnswer;
+        createAnswer = sinon.collection.spy(this.observatory, 'createAnswer');
+        this.observatory.trigger('offer', this.peer1);
+        return expect(createAnswer).to.have.been.calledWith(this.peer1.peerId);
       });
     });
   });

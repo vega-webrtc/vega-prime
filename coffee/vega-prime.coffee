@@ -18,4 +18,7 @@ class VegaPrime
       peers.forEach (peer) =>
         @observatory.createOffer peer.peerId
 
+    @observatory.on 'offer', (payload) =>
+      @observatory.createAnswer payload.peerId
+
 module.exports = VegaPrime

@@ -416,11 +416,16 @@ module.exports = require('./vega-prime.js')
     };
 
     VegaPrime.prototype._setCallbacks = function() {
-      return this.observatory.on('callAccepted', (function(_this) {
+      this.observatory.on('callAccepted', (function(_this) {
         return function(peers) {
           return peers.forEach(function(peer) {
             return _this.observatory.createOffer(peer.peerId);
           });
+        };
+      })(this));
+      return this.observatory.on('offer', (function(_this) {
+        return function(payload) {
+          return _this.observatory.createAnswer(payload.peerId);
         };
       })(this));
     };

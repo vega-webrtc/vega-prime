@@ -23,6 +23,7 @@ class MockObservatory
 
   call: ->
   createOffer: ->
+  createAnswer: ->
 
 describe 'vega-prime', ->
   beforeEach ->
@@ -52,9 +53,9 @@ describe 'vega-prime', ->
 
   describe 'observatory callbacks', ->
     beforeEach ->
-      peer1 = { peerId: 'peerId1' }
+      @peer1 = { peerId: 'peerId1' }
       peer2 = { peerId: 'peerId2' }
-      @peers = [peer1, peer2]
+      @peers = [@peer1, peer2]
 
     it 'creates an offer for all peers in the payload', ->
       createOffer = sinon.collection.spy @observatory, 'createOffer'
@@ -63,3 +64,10 @@ describe 'vega-prime', ->
 
       @peers.forEach (peer) =>
         expect(createOffer).to.have.been.calledWith peer.peerId
+
+    it 'creates an answer for an offering peer', ->
+      createAnswer = sinon.collection.spy @observatory, 'createAnswer'
+
+      @observatory.trigger 'offer', @peer1
+
+      expect(createAnswer).to.have.been.calledWith @peer1.peerId
