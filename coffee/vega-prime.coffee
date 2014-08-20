@@ -8,7 +8,7 @@ class VegaPrime
         roomId: @options.roomId
         badge: @options.badge
 
-      @_setCallbacks()
+    @_setCallbacks()
 
   init: ->
     @observatory.call()
