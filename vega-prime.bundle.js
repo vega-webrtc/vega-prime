@@ -387,6 +387,10 @@ module.exports = require('./vega-client').VegaClient;
       return this.sessionDescriptionCreator.forAnswer(this, peerId, peerConnection);
     };
 
+    VegaObservatory.prototype.onStreamAdded = function(f) {
+      return this.peerStore.on('streamAdded', f);
+    };
+
     VegaObservatory.prototype._setClientCallbacks = function() {
       this.vegaClient.on('callAccepted', (function(_this) {
         return function(payload) {
@@ -530,6 +534,10 @@ module.exports = require('./vega-prime.js')
 
     VegaPrime.prototype.onStreamAdded = function(f) {
       return this.observatory.onStreamAdded(f);
+    };
+
+    VegaPrime.prototype.onPeerRemoved = function(f) {
+      return this.observatory.onPeerRemoved(f);
     };
 
     VegaPrime.prototype._setCallbacks = function() {

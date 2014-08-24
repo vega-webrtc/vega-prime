@@ -16,6 +16,9 @@ class VegaPrime
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)
 
+  onPeerRemoved: (f) ->
+    @observatory.onPeerRemoved(f)
+
   _setCallbacks: ->
     @observatory.on 'callAccepted', (peers) =>
       peers.forEach (peer) =>

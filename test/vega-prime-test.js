@@ -43,6 +43,8 @@
 
     MockObservatory.prototype.onStreamAdded = function() {};
 
+    MockObservatory.prototype.onPeerRemoved = function() {};
+
     return MockObservatory;
 
   })();
@@ -82,6 +84,15 @@
         arg = function() {};
         this.vegaPrime.onStreamAdded(arg);
         return expect(onStreamAdded).to.have.been.calledWith(arg);
+      });
+    });
+    describe('#onPeerRemoved', function() {
+      return it('delegates to the observatory', function() {
+        var arg, onPeerRemoved;
+        onPeerRemoved = sinon.collection.stub(this.observatory, 'onPeerRemoved');
+        arg = function() {};
+        this.vegaPrime.onPeerRemoved(arg);
+        return expect(onPeerRemoved).to.have.been.calledWith(arg);
       });
     });
     return describe('observatory callbacks', function() {

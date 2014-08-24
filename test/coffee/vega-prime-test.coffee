@@ -25,6 +25,7 @@ class MockObservatory
   createOffer: ->
   createAnswer: ->
   onStreamAdded: ->
+  onPeerRemoved: ->
 
 describe 'vega-prime', ->
   beforeEach ->
@@ -60,6 +61,15 @@ describe 'vega-prime', ->
       @vegaPrime.onStreamAdded(arg)
 
       expect(onStreamAdded).to.have.been.calledWith(arg)
+
+  describe '#onPeerRemoved', ->
+    it 'delegates to the observatory', ->
+      onPeerRemoved = sinon.collection.stub @observatory, 'onPeerRemoved'
+      arg = ->
+
+      @vegaPrime.onPeerRemoved(arg)
+
+      expect(onPeerRemoved).to.have.been.calledWith(arg)
 
   describe 'observatory callbacks', ->
     beforeEach ->

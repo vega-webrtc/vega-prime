@@ -23,6 +23,10 @@
       return this.observatory.onStreamAdded(f);
     };
 
+    VegaPrime.prototype.onPeerRemoved = function(f) {
+      return this.observatory.onPeerRemoved(f);
+    };
+
     VegaPrime.prototype._setCallbacks = function() {
       this.observatory.on('callAccepted', (function(_this) {
         return function(peers) {
