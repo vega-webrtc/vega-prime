@@ -13,6 +13,9 @@ class VegaPrime
   init: ->
     @observatory.call()
 
+  onStreamAdded: (f) ->
+    @observatory.onStreamAdded(f)
+
   _setCallbacks: ->
     @observatory.on 'callAccepted', (peers) =>
       peers.forEach (peer) =>

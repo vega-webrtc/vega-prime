@@ -19,6 +19,10 @@
       return this.observatory.call();
     };
 
+    VegaPrime.prototype.onStreamAdded = function(f) {
+      return this.observatory.onStreamAdded(f);
+    };
+
     VegaPrime.prototype._setCallbacks = function() {
       this.observatory.on('callAccepted', (function(_this) {
         return function(peers) {

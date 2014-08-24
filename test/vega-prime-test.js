@@ -41,6 +41,8 @@
 
     MockObservatory.prototype.createAnswer = function() {};
 
+    MockObservatory.prototype.onStreamAdded = function() {};
+
     return MockObservatory;
 
   })();
@@ -71,6 +73,15 @@
         call = sinon.collection.stub(this.observatory, 'call');
         this.vegaPrime.init();
         return expect(call).to.have.been.called;
+      });
+    });
+    describe('#onStreamAdded', function() {
+      return it('delegates to the observatory', function() {
+        var arg, onStreamAdded;
+        onStreamAdded = sinon.collection.stub(this.observatory, 'onStreamAdded');
+        arg = function() {};
+        this.vegaPrime.onStreamAdded(arg);
+        return expect(onStreamAdded).to.have.been.calledWith(arg);
       });
     });
     return describe('observatory callbacks', function() {
