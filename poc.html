@@ -1,0 +1,30 @@
+<html>
+
+<head>
+  <script src="/assets/vega-prime.bundle.min.js"></script>
+  <script src="/assets/jquery.js"></script>
+</head>
+
+<body>
+  <div id="peers"></div>
+
+  <script>
+    var vegaPrime;
+    var stream;
+
+    vegaPrime = new VegaPrime({ url: 'ws://0.0.0.0:3000', badge: { name: 'Dave' }, localStream: stream })
+
+    vegaPrime.onStreamAdded(function(peer) {
+      $('#peers').append('<video data-peer-id="' + peer.peerId + '" src="' + peer.streamUrl + '"></video>');
+    });
+
+    vegaPrime.onPeerRemoved(function(peer) {
+      $('#peers [data-peer-id="' + peer.peerId + '"]').remove();
+    });
+
+    vegaPrime.init();
+  </script>
+
+</body>
+
+</html>
