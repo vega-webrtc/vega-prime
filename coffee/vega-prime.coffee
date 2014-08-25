@@ -8,6 +8,7 @@ class VegaPrime
         roomId: @options.roomId
         badge: @options.badge
         localStream: @options.localStream
+        peerConnectionConfig: @options.peerConnectionConfig
 
     @_setCallbacks()
 
