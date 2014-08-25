@@ -7,6 +7,7 @@ class VegaPrime
         url: @options.url
         roomId: @options.roomId
         badge: @options.badge
+        localStream: @options.localStream
 
     @_setCallbacks()
 

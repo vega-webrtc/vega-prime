@@ -10,7 +10,8 @@
       this.observatory = this.options.observatory || new VegaObservatory({
         url: this.options.url,
         roomId: this.options.roomId,
-        badge: this.options.badge
+        badge: this.options.badge,
+        localStream: this.options.localStream
       });
       this._setCallbacks();
     }
