@@ -71,6 +71,17 @@ describe 'vega-prime', ->
 
       expect(onPeerRemoved).to.have.been.calledWith(arg)
 
+  describe '#onLocalStreamReceived', ->
+    it 'saves a callback for when a local stream is received', ->
+      stream = new Object
+      callback = (stream) =>
+        @theStream = stream
+
+      @vegaPrime.onLocalStreamReceived(callback)
+      @vegaPrime.trigger 'localStreamReceived', stream
+
+      expect(@theStream).to.eq stream
+
   describe 'observatory callbacks', ->
     beforeEach ->
       @peer1 = { peerId: 'peerId1' }

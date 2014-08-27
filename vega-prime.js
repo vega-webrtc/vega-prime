@@ -11,9 +11,11 @@
         url: this.options.url,
         roomId: this.options.roomId,
         badge: this.options.badge,
-        localStream: this.options.localStream
+        localStream: this.options.localStream,
+        peerConnectionConfig: this.options.peerConnectionConfig
       });
-      this._setCallbacks();
+      this.callbacks = {};
+      this._setObservatoryCallbacks();
     }
 
     VegaPrime.prototype.init = function() {
@@ -28,7 +30,11 @@
       return this.observatory.onPeerRemoved(f);
     };
 
-    VegaPrime.prototype._setCallbacks = function() {
+    VegaPrime.prototype.onLocalStreamReceived = function(f) {
+      return this.on('localStreamReceived', f);
+    };
+
+    VegaPrime.prototype._setObservatoryCallbacks = function() {
       this.observatory.on('callAccepted', (function(_this) {
         return function(peers) {
           return peers.forEach(function(peer) {
@@ -41,6 +47,22 @@
           return _this.observatory.createAnswer(payload.peerId);
         };
       })(this));
+    };
+
+    VegaPrime.prototype.on = function(event, callback) {
+      var _base;
+      (_base = this.callbacks)[event] || (_base[event] = []);
+      return this.callbacks[event].push(callback);
+    };
+
+    VegaPrime.prototype.trigger = function(event) {
+      var args, callbacks;
+      args = Array.prototype.slice.call(arguments, 1);
+      if (callbacks = this.callbacks[event]) {
+        return callbacks.forEach(function(callback) {
+          return callback.apply(this, args);
+        });
+      }
     };
 
     return VegaPrime;

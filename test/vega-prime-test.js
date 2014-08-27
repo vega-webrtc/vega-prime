@@ -95,6 +95,20 @@
         return expect(onPeerRemoved).to.have.been.calledWith(arg);
       });
     });
+    describe('#onLocalStreamReceived', function() {
+      return it('saves a callback for when a local stream is received', function() {
+        var callback, stream;
+        stream = new Object;
+        callback = (function(_this) {
+          return function(stream) {
+            return _this.theStream = stream;
+          };
+        })(this);
+        this.vegaPrime.onLocalStreamReceived(callback);
+        this.vegaPrime.trigger('localStreamReceived', stream);
+        return expect(this.theStream).to.eq(stream);
+      });
+    });
     return describe('observatory callbacks', function() {
       beforeEach(function() {
         var peer2;

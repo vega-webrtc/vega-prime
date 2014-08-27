@@ -10,7 +10,9 @@ class VegaPrime
         localStream: @options.localStream
         peerConnectionConfig: @options.peerConnectionConfig
 
-    @_setCallbacks()
+    @callbacks = {}
+
+    @_setObservatoryCallbacks()
 
   init: ->
     @observatory.call()
@@ -21,12 +23,26 @@ class VegaPrime
   onPeerRemoved: (f) ->
     @observatory.onPeerRemoved(f)
 
-  _setCallbacks: ->
+  onLocalStreamReceived: (f) ->
+    @on 'localStreamReceived', f
+
+  _setObservatoryCallbacks: ->
     @observatory.on 'callAccepted', (peers) =>
       peers.forEach (peer) =>
         @observatory.createOffer peer.peerId
 
     @observatory.on 'offer', (payload) =>
       @observatory.createAnswer payload.peerId
+
+  on: (event, callback) ->
+    @callbacks[event] ||= []
+    @callbacks[event].push callback
+
+  trigger: (event) ->
+    args = Array.prototype.slice.call(arguments, 1)
+
+    if callbacks = @callbacks[event]
+      callbacks.forEach (callback) ->
+        callback.apply(this, args)
 
 module.exports = VegaPrime
