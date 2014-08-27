@@ -92,12 +92,17 @@
       });
     });
     describe('#onPeerRemoved', function() {
-      return it('delegates to the observatory', function() {
+      it('delegates to the observatory', function() {
         var arg, onPeerRemoved;
         onPeerRemoved = sinon.collection.stub(this.observatory, 'onPeerRemoved');
         arg = function() {};
         this.vegaPrime.onPeerRemoved(arg);
         return expect(onPeerRemoved).to.have.been.calledWith(arg);
+      });
+      return it('returns vega prime', function() {
+        var returnVal;
+        returnVal = this.vegaPrime.onPeerRemoved(function() {});
+        return expect(returnVal).to.eq(this.vegaPrime);
       });
     });
     describe('#onLocalStreamReceived', function() {

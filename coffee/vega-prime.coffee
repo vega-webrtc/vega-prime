@@ -23,6 +23,7 @@ class VegaPrime
 
   onPeerRemoved: (f) ->
     @observatory.onPeerRemoved(f)
+    this
 
   onLocalStreamReceived: (f) ->
     @on 'localStreamReceived', f

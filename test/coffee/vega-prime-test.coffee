@@ -76,6 +76,11 @@ describe 'vega-prime', ->
 
       expect(onPeerRemoved).to.have.been.calledWith(arg)
 
+    it 'returns vega prime', ->
+      returnVal = @vegaPrime.onPeerRemoved(->)
+
+      expect(returnVal).to.eq @vegaPrime
+
   describe '#onLocalStreamReceived', ->
     it 'saves a callback for when a local stream is received', ->
       stream = new Object

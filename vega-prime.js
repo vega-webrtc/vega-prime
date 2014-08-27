@@ -28,7 +28,8 @@
     };
 
     VegaPrime.prototype.onPeerRemoved = function(f) {
-      return this.observatory.onPeerRemoved(f);
+      this.observatory.onPeerRemoved(f);
+      return this;
     };
 
     VegaPrime.prototype.onLocalStreamReceived = function(f) {
