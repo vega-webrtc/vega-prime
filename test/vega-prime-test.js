@@ -78,12 +78,17 @@
       });
     });
     describe('#onStreamAdded', function() {
-      return it('delegates to the observatory', function() {
+      it('delegates to the observatory', function() {
         var arg, onStreamAdded;
         onStreamAdded = sinon.collection.stub(this.observatory, 'onStreamAdded');
         arg = function() {};
         this.vegaPrime.onStreamAdded(arg);
         return expect(onStreamAdded).to.have.been.calledWith(arg);
+      });
+      return it('returns vega prime', function() {
+        var returnVal;
+        returnVal = this.vegaPrime.onStreamAdded(function() {});
+        return expect(returnVal).to.eq(this.vegaPrime);
       });
     });
     describe('#onPeerRemoved', function() {
@@ -96,7 +101,7 @@
       });
     });
     describe('#onLocalStreamReceived', function() {
-      return it('saves a callback for when a local stream is received', function() {
+      it('saves a callback for when a local stream is received', function() {
         var callback, stream;
         stream = new Object;
         callback = (function(_this) {
@@ -107,6 +112,11 @@
         this.vegaPrime.onLocalStreamReceived(callback);
         this.vegaPrime.trigger('localStreamReceived', stream);
         return expect(this.theStream).to.eq(stream);
+      });
+      return it('returns the vega prime', function() {
+        var returnVal;
+        returnVal = this.vegaPrime.onLocalStreamReceived(function() {});
+        return expect(returnVal).to.eq(this.vegaPrime);
       });
     });
     return describe('observatory callbacks', function() {

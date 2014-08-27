@@ -62,6 +62,11 @@ describe 'vega-prime', ->
 
       expect(onStreamAdded).to.have.been.calledWith(arg)
 
+    it 'returns vega prime', ->
+      returnVal = @vegaPrime.onStreamAdded(->)
+
+      expect(returnVal).to.eq @vegaPrime
+
   describe '#onPeerRemoved', ->
     it 'delegates to the observatory', ->
       onPeerRemoved = sinon.collection.stub @observatory, 'onPeerRemoved'
@@ -81,6 +86,11 @@ describe 'vega-prime', ->
       @vegaPrime.trigger 'localStreamReceived', stream
 
       expect(@theStream).to.eq stream
+
+    it 'returns the vega prime', ->
+      returnVal = @vegaPrime.onLocalStreamReceived(->)
+
+      expect(returnVal).to.eq @vegaPrime
 
   describe 'observatory callbacks', ->
     beforeEach ->
