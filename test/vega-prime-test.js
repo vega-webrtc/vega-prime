@@ -59,7 +59,7 @@
       };
       this.observatory = new MockObservatory;
       this.getUserMediaPromise = {
-        done: function() {}
+        create: function() {}
       };
       options = {
         url: this.url,
@@ -74,9 +74,14 @@
       return sinon.collection.restore();
     });
     describe('#init', function() {
+      beforeEach(function() {
+        return sinon.collection.stub(this.getUserMediaPromise, 'create').returns(this.promise = {
+          done: function() {}
+        });
+      });
       return it('calls done on the getUserMedia promise', function() {
         var done;
-        done = sinon.collection.stub(this.getUserMediaPromise, 'done');
+        done = sinon.collection.stub(this.promise, 'done');
         this.vegaPrime.init();
         return expect(done).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseDone);
       });

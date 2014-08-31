@@ -33,8 +33,7 @@ describe 'vega-prime', ->
     @roomId = '/abc123'
     @badge = { name: 'Dave' }
     @observatory = new MockObservatory
-    @getUserMediaPromise =
-      done: ->
+    @getUserMediaPromise = create: ->
 
     options =
       url: @url
@@ -49,8 +48,12 @@ describe 'vega-prime', ->
     sinon.collection.restore()
 
   describe '#init', ->
+    beforeEach ->
+      sinon.collection.stub(@getUserMediaPromise, 'create').
+        returns @promise = done: ->
+
     it 'calls done on the getUserMedia promise', ->
-      done = sinon.collection.stub @getUserMediaPromise, 'done'
+      done = sinon.collection.stub @promise, 'done'
 
       @vegaPrime.init()
 

@@ -16,7 +16,8 @@ class VegaPrime
     @_setObservatoryCallbacks()
 
   init: ->
-    @getUserMediaPromise.done @getUserMediaPromiseDone
+    promise = @getUserMediaPromise.create()
+    promise.done @getUserMediaPromiseDone
 
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)

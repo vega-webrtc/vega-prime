@@ -557,8 +557,9 @@ module.exports = require('./vega-prime.js')
     }
 
     VegaPrime.prototype.init = function() {
-      this.getUserMediaPromise.done(this.getUserMediaPromiseDone);
-      return this.observatory.call();
+      var promise;
+      promise = this.getUserMediaPromise.create();
+      return promise.done(this.getUserMediaPromiseDone);
     };
 
     VegaPrime.prototype.onStreamAdded = function(f) {
