@@ -16,7 +16,10 @@ class VegaPrime
     @_setObservatoryCallbacks()
 
   init: ->
-    promise = @getUserMediaPromise.create()
+    promise = @getUserMediaPromise.create
+      video: true
+      audio: true
+
     promise.done @getUserMediaPromiseDone
     promise.reject @getUserMediaPromiseReject
 

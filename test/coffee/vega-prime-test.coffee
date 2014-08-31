@@ -50,7 +50,10 @@ describe 'vega-prime', ->
   describe '#init', ->
     beforeEach ->
       sinon.collection.stub(@getUserMediaPromise, 'create').
-        returns @promise =
+        withArgs(
+          video: true
+          audio: true
+        ).returns @promise =
           done: ->
           reject: ->
 

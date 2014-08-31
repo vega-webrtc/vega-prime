@@ -75,7 +75,10 @@
     });
     describe('#init', function() {
       beforeEach(function() {
-        return sinon.collection.stub(this.getUserMediaPromise, 'create').returns(this.promise = {
+        return sinon.collection.stub(this.getUserMediaPromise, 'create').withArgs({
+          video: true,
+          audio: true
+        }).returns(this.promise = {
           done: function() {},
           reject: function() {}
         });

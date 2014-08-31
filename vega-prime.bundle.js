@@ -561,7 +561,10 @@ module.exports = require('./vega-prime.js')
 
     VegaPrime.prototype.init = function() {
       var promise;
-      promise = this.getUserMediaPromise.create();
+      promise = this.getUserMediaPromise.create({
+        video: true,
+        audio: true
+      });
       promise.done(this.getUserMediaPromiseDone);
       return promise.reject(this.getUserMediaPromiseReject);
     };
