@@ -26,7 +26,10 @@ class VegaPrime
     @observatory.call(stream)
     @trigger 'localStreamReceived', wrappedStream
 
-  _wrappedStream: ->
+  _wrappedStream: (stream) ->
+    url = URL.createObjectURL stream
+    
+    { stream: stream, url: url }
 
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)

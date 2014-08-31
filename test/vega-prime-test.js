@@ -109,6 +109,21 @@
         return expect(this.trigger).to.have.been.calledWith('localStreamReceived', this.wrappedStream);
       });
     });
+    describe('_wrappedStream', function() {
+      return it('creates an object url out of the stream and sets it with the stream on an object', function() {
+        var stream, url, urlHelper;
+        stream = new Object;
+        global.URL = urlHelper = {
+          createObjectURL: function() {}
+        };
+        sinon.collection.stub(urlHelper, 'createObjectURL').withArgs(stream).returns(url = 'http://www..com');
+        expect(this.vegaPrime._wrappedStream(stream)).to.eql({
+          stream: stream,
+          url: url
+        });
+        return global.URL = void 0;
+      });
+    });
     describe('#onStreamAdded', function() {
       it('delegates to the observatory', function() {
         var arg, onStreamAdded;

@@ -87,6 +87,20 @@ describe 'vega-prime', ->
 
       expect(@trigger).to.have.been.calledWith 'localStreamReceived', @wrappedStream
 
+  describe '_wrappedStream', ->
+    it 'creates an object url out of the stream and sets it with the stream on an object', ->
+      stream = new Object
+      global.URL = urlHelper = createObjectURL: ->
+      sinon.collection.stub(urlHelper, 'createObjectURL').
+        withArgs(stream).
+        returns url = 'http://www..com'
+
+      expect(@vegaPrime._wrappedStream(stream)).to.eql
+        stream: stream
+        url: url
+
+      global.URL = undefined
+
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->
       onStreamAdded = sinon.collection.stub @observatory, 'onStreamAdded'

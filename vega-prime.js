@@ -35,7 +35,14 @@
       return this.trigger('localStreamReceived', wrappedStream);
     };
 
-    VegaPrime.prototype._wrappedStream = function() {};
+    VegaPrime.prototype._wrappedStream = function(stream) {
+      var url;
+      url = URL.createObjectURL(stream);
+      return {
+        stream: stream,
+        url: url
+      };
+    };
 
     VegaPrime.prototype.onStreamAdded = function(f) {
       this.observatory.onStreamAdded(f);
