@@ -101,6 +101,15 @@ describe 'vega-prime', ->
 
       global.URL = undefined
 
+  describe 'getUserMediaPromiseReject', ->
+    it 'triggers a localStreamError', ->
+      trigger = sinon.collection.stub @vegaPrime, 'trigger'
+      error   = new Object
+
+      @vegaPrime.getUserMediaPromiseReject error
+
+      expect(trigger).to.have.been.calledWith 'localStreamError', error
+
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->
       onStreamAdded = sinon.collection.stub @observatory, 'onStreamAdded'

@@ -124,6 +124,15 @@
         return global.URL = void 0;
       });
     });
+    describe('getUserMediaPromiseReject', function() {
+      return it('triggers a localStreamError', function() {
+        var error, trigger;
+        trigger = sinon.collection.stub(this.vegaPrime, 'trigger');
+        error = new Object;
+        this.vegaPrime.getUserMediaPromiseReject(error);
+        return expect(trigger).to.have.been.calledWith('localStreamError', error);
+      });
+    });
     describe('#onStreamAdded', function() {
       it('delegates to the observatory', function() {
         var arg, onStreamAdded;

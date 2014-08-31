@@ -31,6 +31,9 @@ class VegaPrime
     
     { stream: stream, url: url }
 
+  getUserMediaPromiseReject: (error) =>
+    @trigger 'localStreamError', error
+
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)
     this

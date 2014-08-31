@@ -8,6 +8,7 @@
   VegaPrime = (function() {
     function VegaPrime(options) {
       this.options = options;
+      this.getUserMediaPromiseReject = __bind(this.getUserMediaPromiseReject, this);
       this.getUserMediaPromiseDone = __bind(this.getUserMediaPromiseDone, this);
       this.observatory = this.options.observatory || new VegaObservatory({
         url: this.options.url,
@@ -42,6 +43,10 @@
         stream: stream,
         url: url
       };
+    };
+
+    VegaPrime.prototype.getUserMediaPromiseReject = function(error) {
+      return this.trigger('localStreamError', error);
     };
 
     VegaPrime.prototype.onStreamAdded = function(f) {
