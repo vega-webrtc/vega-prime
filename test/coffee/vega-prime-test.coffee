@@ -69,13 +69,23 @@ describe 'vega-prime', ->
       expect(reject).to.have.been.calledWith @vegaPrime.getUserMediaPromiseReject
 
   describe '#getUserMediaPromiseDone', ->
-    it 'has the observatory make a call with the local stream', ->
-      @stream = new Object
-      @call   = sinon.collection.stub @observatory, 'call'
+    beforeEach ->
+      @stream  = new Object
+      @call    = sinon.collection.stub @observatory, 'call'
+      @trigger = sinon.collection.stub @vegaPrime, 'trigger'
+      sinon.collection.stub(@vegaPrime, '_wrappedStream').
+        withArgs(@stream).
+        returns @wrappedStream = new Object
 
+    it 'has the observatory make a call with the local stream', ->
       @vegaPrime.getUserMediaPromiseDone(@stream)
 
       expect(@call).to.have.been.calledWith @stream
+
+    it 'triggers localStreamReceived with a wrapped stream', ->
+      @vegaPrime.getUserMediaPromiseDone(@stream)
+
+      expect(@trigger).to.have.been.calledWith 'localStreamReceived', @wrappedStream
 
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->

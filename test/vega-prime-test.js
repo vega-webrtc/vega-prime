@@ -94,11 +94,19 @@
       });
     });
     describe('#getUserMediaPromiseDone', function() {
-      return it('has the observatory make a call with the local stream', function() {
+      beforeEach(function() {
         this.stream = new Object;
         this.call = sinon.collection.stub(this.observatory, 'call');
+        this.trigger = sinon.collection.stub(this.vegaPrime, 'trigger');
+        return sinon.collection.stub(this.vegaPrime, '_wrappedStream').withArgs(this.stream).returns(this.wrappedStream = new Object);
+      });
+      it('has the observatory make a call with the local stream', function() {
         this.vegaPrime.getUserMediaPromiseDone(this.stream);
         return expect(this.call).to.have.been.calledWith(this.stream);
+      });
+      return it('triggers localStreamReceived with a wrapped stream', function() {
+        this.vegaPrime.getUserMediaPromiseDone(this.stream);
+        return expect(this.trigger).to.have.been.calledWith('localStreamReceived', this.wrappedStream);
       });
     });
     describe('#onStreamAdded', function() {

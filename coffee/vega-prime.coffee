@@ -21,7 +21,12 @@ class VegaPrime
     promise.reject @getUserMediaPromiseReject
 
   getUserMediaPromiseDone: (stream) =>
+    wrappedStream = @_wrappedStream stream
+
     @observatory.call(stream)
+    @trigger 'localStreamReceived', wrappedStream
+
+  _wrappedStream: ->
 
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)

@@ -566,8 +566,13 @@ module.exports = require('./vega-prime.js')
     };
 
     VegaPrime.prototype.getUserMediaPromiseDone = function(stream) {
-      return this.observatory.call(stream);
+      var wrappedStream;
+      wrappedStream = this._wrappedStream(stream);
+      this.observatory.call(stream);
+      return this.trigger('localStreamReceived', wrappedStream);
     };
+
+    VegaPrime.prototype._wrappedStream = function() {};
 
     VegaPrime.prototype.onStreamAdded = function(f) {
       this.observatory.onStreamAdded(f);
