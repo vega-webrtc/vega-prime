@@ -68,6 +68,15 @@ describe 'vega-prime', ->
 
       expect(reject).to.have.been.calledWith @vegaPrime.getUserMediaPromiseReject
 
+  describe '#getUserMediaPromiseDone', ->
+    it 'has the observatory make a call with the local stream', ->
+      @stream = new Object
+      @call   = sinon.collection.stub @observatory, 'call'
+
+      @vegaPrime.getUserMediaPromiseDone(@stream)
+
+      expect(@call).to.have.been.calledWith @stream
+
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->
       onStreamAdded = sinon.collection.stub @observatory, 'onStreamAdded'

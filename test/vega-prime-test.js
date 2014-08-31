@@ -93,6 +93,14 @@
         return expect(reject).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseReject);
       });
     });
+    describe('#getUserMediaPromiseDone', function() {
+      return it('has the observatory make a call with the local stream', function() {
+        this.stream = new Object;
+        this.call = sinon.collection.stub(this.observatory, 'call');
+        this.vegaPrime.getUserMediaPromiseDone(this.stream);
+        return expect(this.call).to.have.been.calledWith(this.stream);
+      });
+    });
     describe('#onStreamAdded', function() {
       it('delegates to the observatory', function() {
         var arg, onStreamAdded;
