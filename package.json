@@ -12,6 +12,9 @@
     "sinon-chai":"~2.5",
     "uglify-js":"~2.4"
   },
+  "dependencies": {
+    "get-user-media":"~0.0"
+  },
   "scripts": {
     "build":"coffee -o . -c coffee && browserify bundle.js -o vega-prime.bundle.js && uglifyjs vega-prime.bundle.js -o vega-prime.bundle.min.js",
     "build-test":"coffee -o ./test -c test/coffee",

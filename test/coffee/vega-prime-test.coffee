@@ -44,10 +44,16 @@ describe 'vega-prime', ->
       getUserMedia: @getUserMedia
       userMediaConstraints: @userMediaConstraints
 
+    @setTimeout = sinon.collection.stub global, 'setTimeout'
+
     @vegaPrime = new VegaPrime options
 
   afterEach ->
     sinon.collection.restore()
+
+  describe 'new', ->
+    it 'asynchronously calls init', ->
+      expect(@setTimeout).to.have.been.calledWith @vegaPrime.init, 0
 
   describe '#init', ->
     beforeEach ->

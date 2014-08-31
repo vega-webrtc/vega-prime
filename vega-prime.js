@@ -11,6 +11,7 @@
       this._localStreamError = __bind(this._localStreamError, this);
       this._localStreamReceived = __bind(this._localStreamReceived, this);
       this.getUserMediaCallback = __bind(this.getUserMediaCallback, this);
+      this.init = __bind(this.init, this);
       this.observatory = this.options.observatory || new VegaObservatory({
         url: this.options.url,
         roomId: this.options.roomId,
@@ -18,13 +19,14 @@
         localStream: this.options.localStream,
         peerConnectionConfig: this.options.peerConnectionConfig
       });
-      this.getUserMedia = this.options.getUserMedia;
+      this.getUserMedia = this.options.getUserMedia || require('get-user-media');
       this.userMediaConstraints = this.options.userMediaConstraints || {
         video: true,
         audio: true
       };
       this.callbacks = {};
       this._setObservatoryCallbacks();
+      setTimeout(this.init, 0);
     }
 
     VegaPrime.prototype.init = function() {

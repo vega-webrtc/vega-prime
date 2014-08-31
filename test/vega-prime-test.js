@@ -68,10 +68,16 @@
         getUserMedia: this.getUserMedia,
         userMediaConstraints: this.userMediaConstraints
       };
+      this.setTimeout = sinon.collection.stub(global, 'setTimeout');
       return this.vegaPrime = new VegaPrime(options);
     });
     afterEach(function() {
       return sinon.collection.restore();
+    });
+    describe('new', function() {
+      return it('asynchronously calls init', function() {
+        return expect(this.setTimeout).to.have.been.calledWith(this.vegaPrime.init, 0);
+      });
     });
     describe('#init', function() {
       beforeEach(function() {

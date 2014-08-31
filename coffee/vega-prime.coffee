@@ -10,7 +10,7 @@ class VegaPrime
         localStream: @options.localStream
         peerConnectionConfig: @options.peerConnectionConfig
 
-    @getUserMedia = @options.getUserMedia
+    @getUserMedia = @options.getUserMedia || require('get-user-media')
 
     @userMediaConstraints = @options.userMediaConstraints ||
       video: true
@@ -18,8 +18,9 @@ class VegaPrime
     @callbacks = {}
 
     @_setObservatoryCallbacks()
+    setTimeout @init, 0
 
-  init: ->
+  init: =>
     @getUserMedia(@userMediaConstraints, @getUserMediaCallback)
 
   getUserMediaCallback: (error, stream) =>
