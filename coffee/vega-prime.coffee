@@ -10,12 +10,13 @@ class VegaPrime
         localStream: @options.localStream
         peerConnectionConfig: @options.peerConnectionConfig
 
+    @getUserMediaPromise = @options.getUserMediaPromise
     @callbacks = {}
 
     @_setObservatoryCallbacks()
 
   init: ->
-    @observatory.call()
+    @getUserMediaPromise.done @getUserMediaPromiseDone
 
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)

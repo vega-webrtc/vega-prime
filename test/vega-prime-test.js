@@ -52,17 +52,21 @@
   describe('vega-prime', function() {
     beforeEach(function() {
       var options;
-      this.url = 'ws:0.0.0.0:3000';
+      this.url = 'ws://0.0.0.0:3000';
       this.roomId = '/abc123';
       this.badge = {
         name: 'Dave'
       };
       this.observatory = new MockObservatory;
+      this.getUserMediaPromise = {
+        done: function() {}
+      };
       options = {
         url: this.url,
         roomId: this.roomId,
         badge: this.badge,
-        observatory: this.observatory
+        observatory: this.observatory,
+        getUserMediaPromise: this.getUserMediaPromise
       };
       return this.vegaPrime = new VegaPrime(options);
     });
@@ -70,11 +74,11 @@
       return sinon.collection.restore();
     });
     describe('#init', function() {
-      return it('orders the vega observatory to make a call', function() {
-        var call;
-        call = sinon.collection.stub(this.observatory, 'call');
+      return it('calls done on the getUserMedia promise', function() {
+        var done;
+        done = sinon.collection.stub(this.getUserMediaPromise, 'done');
         this.vegaPrime.init();
-        return expect(call).to.have.been.called;
+        return expect(done).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseDone);
       });
     });
     describe('#onStreamAdded', function() {

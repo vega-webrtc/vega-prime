@@ -29,16 +29,19 @@ class MockObservatory
 
 describe 'vega-prime', ->
   beforeEach ->
-    @url = 'ws:0.0.0.0:3000'
+    @url = 'ws://0.0.0.0:3000'
     @roomId = '/abc123'
     @badge = { name: 'Dave' }
     @observatory = new MockObservatory
+    @getUserMediaPromise =
+      done: ->
 
     options =
       url: @url
       roomId: @roomId
       badge: @badge
       observatory: @observatory
+      getUserMediaPromise: @getUserMediaPromise
 
     @vegaPrime = new VegaPrime options
 
@@ -46,12 +49,12 @@ describe 'vega-prime', ->
     sinon.collection.restore()
 
   describe '#init', ->
-    it 'orders the vega observatory to make a call', ->
-      call = sinon.collection.stub @observatory, 'call'
+    it 'calls done on the getUserMedia promise', ->
+      done = sinon.collection.stub @getUserMediaPromise, 'done'
 
       @vegaPrime.init()
 
-      expect(call).to.have.been.called
+      expect(done).to.have.been.calledWith @vegaPrime.getUserMediaPromiseDone
 
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->

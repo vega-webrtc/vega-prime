@@ -551,11 +551,13 @@ module.exports = require('./vega-prime.js')
         localStream: this.options.localStream,
         peerConnectionConfig: this.options.peerConnectionConfig
       });
+      this.getUserMediaPromise = this.options.getUserMediaPromise;
       this.callbacks = {};
       this._setObservatoryCallbacks();
     }
 
     VegaPrime.prototype.init = function() {
+      this.getUserMediaPromise.done(this.getUserMediaPromiseDone);
       return this.observatory.call();
     };
 
