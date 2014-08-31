@@ -33,14 +33,16 @@ describe 'vega-prime', ->
     @roomId = '/abc123'
     @badge = { name: 'Dave' }
     @observatory = new MockObservatory
-    @getUserMediaPromise = create: ->
+    @getUserMedia = ->
+    @userMediaConstraints = new Object
 
     options =
       url: @url
       roomId: @roomId
       badge: @badge
       observatory: @observatory
-      getUserMediaPromise: @getUserMediaPromise
+      getUserMedia: @getUserMedia
+      userMediaConstraints: @userMediaConstraints
 
     @vegaPrime = new VegaPrime options
 
@@ -49,29 +51,32 @@ describe 'vega-prime', ->
 
   describe '#init', ->
     beforeEach ->
-      sinon.collection.stub(@getUserMediaPromise, 'create').
-        withArgs(
-          video: true
-          audio: true
-        ).returns @promise =
-          done: ->
-          reject: ->
+      @stub = sinon.collection.stub(@vegaPrime, 'getUserMedia')
 
-    it 'calls done on the getUserMedia promise', ->
-      done = sinon.collection.stub @promise, 'done'
-
+    it 'calls getUserMedia with constraints and callback', ->
       @vegaPrime.init()
 
-      expect(done).to.have.been.calledWith @vegaPrime.getUserMediaPromiseDone
+      expect(@stub).to.have.been.calledWith @userMediaConstraints,
+        @vegaPrime.getUserMediaCallback
 
-    it 'calls reject on the getUserMedia promise', ->
-      reject = sinon.collection.stub @promise, 'reject'
+  describe '#getUserMediaCallback', ->
+    describe 'an error occurred', ->
+      it 'delegates to localStreamError', ->
+        localStreamError = sinon.collection.stub @vegaPrime, '_localStreamError'
 
-      @vegaPrime.init()
+        @vegaPrime.getUserMediaCallback error = new Object, null
 
-      expect(reject).to.have.been.calledWith @vegaPrime.getUserMediaPromiseReject
+        expect(localStreamError).to.have.been.calledWith error
 
-  describe '#getUserMediaPromiseDone', ->
+    describe 'stream is passed', ->
+      it 'delegates to _localStreamReceived', ->
+        localStreamReceived = sinon.collection.stub @vegaPrime, '_localStreamReceived'
+
+        @vegaPrime.getUserMediaCallback null, stream = new Object
+
+        expect(localStreamReceived).to.have.been.calledWith stream
+
+  describe '#_localStreamReceived', ->
     beforeEach ->
       @stream  = new Object
       @call    = sinon.collection.stub @observatory, 'call'
@@ -80,14 +85,12 @@ describe 'vega-prime', ->
         withArgs(@stream).
         returns @wrappedStream = new Object
 
-    it 'has the observatory make a call with the local stream', ->
-      @vegaPrime.getUserMediaPromiseDone(@stream)
+      @vegaPrime._localStreamReceived(@stream)
 
+    it 'has the observatory make a call with the local stream', ->
       expect(@call).to.have.been.calledWith @stream
 
     it 'triggers localStreamReceived with a wrapped stream', ->
-      @vegaPrime.getUserMediaPromiseDone(@stream)
-
       expect(@trigger).to.have.been.calledWith 'localStreamReceived', @wrappedStream
 
   describe '_wrappedStream', ->
@@ -104,12 +107,12 @@ describe 'vega-prime', ->
 
       global.URL = undefined
 
-  describe 'getUserMediaPromiseReject', ->
+  describe '#_localStreamError', ->
     it 'triggers a localStreamError', ->
       trigger = sinon.collection.stub @vegaPrime, 'trigger'
       error   = new Object
 
-      @vegaPrime.getUserMediaPromiseReject error
+      @vegaPrime._localStreamError error
 
       expect(trigger).to.have.been.calledWith 'localStreamError', error
 

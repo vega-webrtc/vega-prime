@@ -58,15 +58,15 @@
         name: 'Dave'
       };
       this.observatory = new MockObservatory;
-      this.getUserMediaPromise = {
-        create: function() {}
-      };
+      this.getUserMedia = function() {};
+      this.userMediaConstraints = new Object;
       options = {
         url: this.url,
         roomId: this.roomId,
         badge: this.badge,
         observatory: this.observatory,
-        getUserMediaPromise: this.getUserMediaPromise
+        getUserMedia: this.getUserMedia,
+        userMediaConstraints: this.userMediaConstraints
       };
       return this.vegaPrime = new VegaPrime(options);
     });
@@ -75,40 +75,43 @@
     });
     describe('#init', function() {
       beforeEach(function() {
-        return sinon.collection.stub(this.getUserMediaPromise, 'create').withArgs({
-          video: true,
-          audio: true
-        }).returns(this.promise = {
-          done: function() {},
-          reject: function() {}
-        });
+        return this.stub = sinon.collection.stub(this.vegaPrime, 'getUserMedia');
       });
-      it('calls done on the getUserMedia promise', function() {
-        var done;
-        done = sinon.collection.stub(this.promise, 'done');
+      return it('calls getUserMedia with constraints and callback', function() {
         this.vegaPrime.init();
-        return expect(done).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseDone);
-      });
-      return it('calls reject on the getUserMedia promise', function() {
-        var reject;
-        reject = sinon.collection.stub(this.promise, 'reject');
-        this.vegaPrime.init();
-        return expect(reject).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseReject);
+        return expect(this.stub).to.have.been.calledWith(this.userMediaConstraints, this.vegaPrime.getUserMediaCallback);
       });
     });
-    describe('#getUserMediaPromiseDone', function() {
+    describe('#getUserMediaCallback', function() {
+      describe('an error occurred', function() {
+        return it('delegates to localStreamError', function() {
+          var error, localStreamError;
+          localStreamError = sinon.collection.stub(this.vegaPrime, '_localStreamError');
+          this.vegaPrime.getUserMediaCallback(error = new Object, null);
+          return expect(localStreamError).to.have.been.calledWith(error);
+        });
+      });
+      return describe('stream is passed', function() {
+        return it('delegates to _localStreamReceived', function() {
+          var localStreamReceived, stream;
+          localStreamReceived = sinon.collection.stub(this.vegaPrime, '_localStreamReceived');
+          this.vegaPrime.getUserMediaCallback(null, stream = new Object);
+          return expect(localStreamReceived).to.have.been.calledWith(stream);
+        });
+      });
+    });
+    describe('#_localStreamReceived', function() {
       beforeEach(function() {
         this.stream = new Object;
         this.call = sinon.collection.stub(this.observatory, 'call');
         this.trigger = sinon.collection.stub(this.vegaPrime, 'trigger');
-        return sinon.collection.stub(this.vegaPrime, '_wrappedStream').withArgs(this.stream).returns(this.wrappedStream = new Object);
+        sinon.collection.stub(this.vegaPrime, '_wrappedStream').withArgs(this.stream).returns(this.wrappedStream = new Object);
+        return this.vegaPrime._localStreamReceived(this.stream);
       });
       it('has the observatory make a call with the local stream', function() {
-        this.vegaPrime.getUserMediaPromiseDone(this.stream);
         return expect(this.call).to.have.been.calledWith(this.stream);
       });
       return it('triggers localStreamReceived with a wrapped stream', function() {
-        this.vegaPrime.getUserMediaPromiseDone(this.stream);
         return expect(this.trigger).to.have.been.calledWith('localStreamReceived', this.wrappedStream);
       });
     });
@@ -127,12 +130,12 @@
         return global.URL = void 0;
       });
     });
-    describe('getUserMediaPromiseReject', function() {
+    describe('#_localStreamError', function() {
       return it('triggers a localStreamError', function() {
         var error, trigger;
         trigger = sinon.collection.stub(this.vegaPrime, 'trigger');
         error = new Object;
-        this.vegaPrime.getUserMediaPromiseReject(error);
+        this.vegaPrime._localStreamError(error);
         return expect(trigger).to.have.been.calledWith('localStreamError', error);
       });
     });

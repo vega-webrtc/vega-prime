@@ -8,8 +8,9 @@
   VegaPrime = (function() {
     function VegaPrime(options) {
       this.options = options;
-      this.getUserMediaPromiseReject = __bind(this.getUserMediaPromiseReject, this);
-      this.getUserMediaPromiseDone = __bind(this.getUserMediaPromiseDone, this);
+      this._localStreamError = __bind(this._localStreamError, this);
+      this._localStreamReceived = __bind(this._localStreamReceived, this);
+      this.getUserMediaCallback = __bind(this.getUserMediaCallback, this);
       this.observatory = this.options.observatory || new VegaObservatory({
         url: this.options.url,
         roomId: this.options.roomId,
@@ -17,22 +18,28 @@
         localStream: this.options.localStream,
         peerConnectionConfig: this.options.peerConnectionConfig
       });
-      this.getUserMediaPromise = this.options.getUserMediaPromise;
+      this.getUserMedia = this.options.getUserMedia;
+      this.userMediaConstraints = this.options.userMediaConstraints || {
+        video: true,
+        audio: true
+      };
       this.callbacks = {};
       this._setObservatoryCallbacks();
     }
 
     VegaPrime.prototype.init = function() {
-      var promise;
-      promise = this.getUserMediaPromise.create({
-        video: true,
-        audio: true
-      });
-      promise.done(this.getUserMediaPromiseDone);
-      return promise.reject(this.getUserMediaPromiseReject);
+      return this.getUserMedia(this.userMediaConstraints, this.getUserMediaCallback);
     };
 
-    VegaPrime.prototype.getUserMediaPromiseDone = function(stream) {
+    VegaPrime.prototype.getUserMediaCallback = function(error, stream) {
+      if (error) {
+        return this._localStreamError(error);
+      } else {
+        return this._localStreamReceived(stream);
+      }
+    };
+
+    VegaPrime.prototype._localStreamReceived = function(stream) {
       var wrappedStream;
       wrappedStream = this._wrappedStream(stream);
       this.observatory.call(stream);
@@ -48,7 +55,7 @@
       };
     };
 
-    VegaPrime.prototype.getUserMediaPromiseReject = function(error) {
+    VegaPrime.prototype._localStreamError = function(error) {
       return this.trigger('localStreamError', error);
     };
 

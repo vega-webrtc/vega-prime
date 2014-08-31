@@ -10,20 +10,25 @@ class VegaPrime
         localStream: @options.localStream
         peerConnectionConfig: @options.peerConnectionConfig
 
-    @getUserMediaPromise = @options.getUserMediaPromise
+    @getUserMedia = @options.getUserMedia
+
+    @userMediaConstraints = @options.userMediaConstraints ||
+      video: true
+      audio: true
     @callbacks = {}
 
     @_setObservatoryCallbacks()
 
   init: ->
-    promise = @getUserMediaPromise.create
-      video: true
-      audio: true
+    @getUserMedia(@userMediaConstraints, @getUserMediaCallback)
 
-    promise.done @getUserMediaPromiseDone
-    promise.reject @getUserMediaPromiseReject
+  getUserMediaCallback: (error, stream) =>
+    if error
+      @_localStreamError error
+    else
+      @_localStreamReceived stream
 
-  getUserMediaPromiseDone: (stream) =>
+  _localStreamReceived: (stream) =>
     wrappedStream = @_wrappedStream stream
 
     @observatory.call(stream)
@@ -34,7 +39,7 @@ class VegaPrime
     
     { stream: stream, url: url }
 
-  getUserMediaPromiseReject: (error) =>
+  _localStreamError: (error) =>
     @trigger 'localStreamError', error
 
   onStreamAdded: (f) ->
