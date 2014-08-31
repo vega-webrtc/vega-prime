@@ -18,6 +18,7 @@ class VegaPrime
   init: ->
     promise = @getUserMediaPromise.create()
     promise.done @getUserMediaPromiseDone
+    promise.reject @getUserMediaPromiseReject
 
   onStreamAdded: (f) ->
     @observatory.onStreamAdded(f)

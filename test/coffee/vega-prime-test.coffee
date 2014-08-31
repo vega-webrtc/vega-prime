@@ -50,7 +50,9 @@ describe 'vega-prime', ->
   describe '#init', ->
     beforeEach ->
       sinon.collection.stub(@getUserMediaPromise, 'create').
-        returns @promise = done: ->
+        returns @promise =
+          done: ->
+          reject: ->
 
     it 'calls done on the getUserMedia promise', ->
       done = sinon.collection.stub @promise, 'done'
@@ -58,6 +60,13 @@ describe 'vega-prime', ->
       @vegaPrime.init()
 
       expect(done).to.have.been.calledWith @vegaPrime.getUserMediaPromiseDone
+
+    it 'calls reject on the getUserMedia promise', ->
+      reject = sinon.collection.stub @promise, 'reject'
+
+      @vegaPrime.init()
+
+      expect(reject).to.have.been.calledWith @vegaPrime.getUserMediaPromiseReject
 
   describe '#onStreamAdded', ->
     it 'delegates to the observatory', ->

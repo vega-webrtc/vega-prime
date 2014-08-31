@@ -22,7 +22,8 @@
     VegaPrime.prototype.init = function() {
       var promise;
       promise = this.getUserMediaPromise.create();
-      return promise.done(this.getUserMediaPromiseDone);
+      promise.done(this.getUserMediaPromiseDone);
+      return promise.reject(this.getUserMediaPromiseReject);
     };
 
     VegaPrime.prototype.onStreamAdded = function(f) {

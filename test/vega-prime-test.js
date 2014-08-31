@@ -76,14 +76,21 @@
     describe('#init', function() {
       beforeEach(function() {
         return sinon.collection.stub(this.getUserMediaPromise, 'create').returns(this.promise = {
-          done: function() {}
+          done: function() {},
+          reject: function() {}
         });
       });
-      return it('calls done on the getUserMedia promise', function() {
+      it('calls done on the getUserMedia promise', function() {
         var done;
         done = sinon.collection.stub(this.promise, 'done');
         this.vegaPrime.init();
         return expect(done).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseDone);
+      });
+      return it('calls reject on the getUserMedia promise', function() {
+        var reject;
+        reject = sinon.collection.stub(this.promise, 'reject');
+        this.vegaPrime.init();
+        return expect(reject).to.have.been.calledWith(this.vegaPrime.getUserMediaPromiseReject);
       });
     });
     describe('#onStreamAdded', function() {
