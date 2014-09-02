@@ -27,6 +27,7 @@ module.exports = require('./vega-client').VegaClient;
       this.roomId = roomId;
       this.badge = badge;
       this.onmessage = __bind(this.onmessage, this);
+      this.onerror = __bind(this.onerror, this);
       if (this.url === void 0) {
         throw new TypeError('url not provided');
       }
@@ -39,7 +40,12 @@ module.exports = require('./vega-client').VegaClient;
       this.websocket = new WebSocket(this.url);
       this.callbacks = {};
       this.websocket.onmessage = this.onmessage;
+      this.websocket.onerror = this.onerror;
     }
+
+    VegaClient.prototype.onerror = function(error) {
+      return this.trigger('websocketError', error);
+    };
 
     VegaClient.prototype.onmessage = function(message) {
       var data, parsedData, payload, type;
@@ -413,6 +419,11 @@ module.exports = require('./vega-observatory.js')
     };
 
     VegaObservatory.prototype._setClientCallbacks = function() {
+      this.vegaClient.on('websocketError', (function(_this) {
+        return function(error) {
+          return _this.trigger('clientWebsocketError', error);
+        };
+      })(this));
       this.vegaClient.on('callAccepted', (function(_this) {
         return function(payload) {
           return _this._handleCallAccepted(payload);
@@ -639,6 +650,11 @@ module.exports = function(constraints, fn) {
 
     VegaPrime.prototype.onLocalStreamReceived = function(f) {
       this.on('localStreamReceived', f);
+      return this;
+    };
+
+    VegaPrime.prototype.onClientWebsocketError = function(f) {
+      this.observatory.on('clientWebsocketError', f);
       return this;
     };
 

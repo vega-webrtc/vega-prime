@@ -192,6 +192,19 @@
         return expect(returnVal).to.eq(this.vegaPrime);
       });
     });
+    describe('#onClientWebsocketError', function() {
+      it('sets the on the observatory event listeners', function() {
+        var f, oN;
+        oN = sinon.collection.stub(this.observatory, 'on');
+        this.vegaPrime.onClientWebsocketError(f = function() {});
+        return expect(oN).to.have.been.calledWith('clientWebsocketError', f);
+      });
+      return it('returns the vega prime object', function() {
+        var f, value;
+        value = this.vegaPrime.onClientWebsocketError(f = function() {});
+        return expect(value).to.eq(this.vegaPrime);
+      });
+    });
     return describe('observatory callbacks', function() {
       beforeEach(function() {
         var peer2;

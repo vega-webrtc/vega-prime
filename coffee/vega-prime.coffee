@@ -55,6 +55,10 @@ class VegaPrime
     @on 'localStreamReceived', f
     this
 
+  onClientWebsocketError: (f) ->
+    @observatory.on 'clientWebsocketError', f
+    this
+
   _setObservatoryCallbacks: ->
     @observatory.on 'callAccepted', (peers) =>
       peers.forEach (peer) =>

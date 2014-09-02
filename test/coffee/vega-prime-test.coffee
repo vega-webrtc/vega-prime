@@ -166,6 +166,19 @@ describe 'vega-prime', ->
 
       expect(returnVal).to.eq @vegaPrime
 
+  describe '#onClientWebsocketError', ->
+    it 'sets the on the observatory event listeners', ->
+      oN = sinon.collection.stub @observatory, 'on'
+
+      @vegaPrime.onClientWebsocketError(f = ->)
+
+      expect(oN).to.have.been.calledWith 'clientWebsocketError', f
+
+    it 'returns the vega prime object', ->
+      value = @vegaPrime.onClientWebsocketError(f = ->)
+
+      expect(value).to.eq @vegaPrime
+
   describe 'observatory callbacks', ->
     beforeEach ->
       @peer1 = { peerId: 'peerId1' }

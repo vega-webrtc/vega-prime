@@ -76,6 +76,11 @@
       return this;
     };
 
+    VegaPrime.prototype.onClientWebsocketError = function(f) {
+      this.observatory.on('clientWebsocketError', f);
+      return this;
+    };
+
     VegaPrime.prototype._setObservatoryCallbacks = function() {
       this.observatory.on('callAccepted', (function(_this) {
         return function(peers) {
