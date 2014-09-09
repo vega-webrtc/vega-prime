@@ -7,7 +7,46 @@ Use it in conjunction with the signaling server:
 
 ## Usage
 
-### Interface
+### Example
+
+Given a Vega Server running on port 9292 at http://www.example.org,
+the following would produce the simplest video chat application.
+
+```html
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="/javascripts/vega-prime.bundle.js"></script>
+  </head>
+  
+  <body>
+    <div id="peers"></div>
+    <video id="local-stream" autoplay muted></video>
+
+    <script>
+      new VegaPrime({
+        url: 'ws://localhost:4500', 
+        badge: { name: 'Dave' },
+        roomId: 'a',
+      }).onLocalStreamReceived(function(wrappedStream){
+        $('video#local-stream').attr('src', wrappedStream.url);
+      }).onStreamAdded(function(peer){
+        $video = $('<video autoplay muted>');
+        $video.attr('src', peer.streamUrl);
+        $video.attr('data-peer-id', peer.peerId);
+
+        $('#peers').append($video)
+      }).onPeerRemoved(function(peer){
+        $('video[data-peer-id="' + peer.peerId + '"]').remove()
+      }).onClientWebsocketError(function(error){
+        $('body').append(error);
+      })
+    </script>
+  </body>
+</html>
+```
+
+### API
 
 #### `#onStreamAdded`
 
