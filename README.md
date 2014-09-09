@@ -7,4 +7,10 @@ Use it in conjunction with the signaling server:
 
 ## Usage
 
+### Interface
 
+#### `#onStreamAdded`
+
+This is triggered when a peer in your room has established a
+peer-to-peer stream. The callback is passed a peer object that
+contains a `peerId`, a `stream`, a `streamUrl`, and a `badge`.
