@@ -9,27 +9,27 @@ Use it in conjunction with the signaling server:
 
 ### Example
 
-Given a Vega Server running on port 9292 at http://www.example.org,
+Given a Vega Server running on port 9292 at http://www.example.org and
+the Vega Prime bundle located at the root of your application,
 the following would produce the simplest video chat application.
 
 ```html
 <html>
   <head>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="/javascripts/vega-prime.bundle.js"></script>
+    <script src="vega-prime.bundle.js"></script>
   </head>
   
   <body>
     <div id="peers"></div>
     <video id="local-stream" autoplay muted></video>
-
     <div id="errors"></div>
 
     <script>
       new VegaPrime({
         url: 'ws://www.example.org:9292', 
         badge: { name: 'Dave' },
-        roomId: 'a',
+        roomId: 'some-room-id',
       }).onLocalStreamReceived(function(wrappedStream){
         $('video#local-stream').attr('src', wrappedStream.url);
       }).onStreamAdded(function(peer){
