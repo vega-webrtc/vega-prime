@@ -23,15 +23,17 @@ the following would produce the simplest video chat application.
     <div id="peers"></div>
     <video id="local-stream" autoplay muted></video>
 
+    <div id="errors"></div>
+
     <script>
       new VegaPrime({
-        url: 'ws://localhost:4500', 
+        url: 'ws://www.example.org:9292', 
         badge: { name: 'Dave' },
         roomId: 'a',
       }).onLocalStreamReceived(function(wrappedStream){
         $('video#local-stream').attr('src', wrappedStream.url);
       }).onStreamAdded(function(peer){
-        $video = $('<video autoplay muted>');
+        $video = $('<video autoplay>');
         $video.attr('src', peer.streamUrl);
         $video.attr('data-peer-id', peer.peerId);
 
@@ -39,7 +41,7 @@ the following would produce the simplest video chat application.
       }).onPeerRemoved(function(peer){
         $('video[data-peer-id="' + peer.peerId + '"]').remove()
       }).onClientWebsocketError(function(error){
-        $('body').append(error);
+        $('#errors').append(error);
       })
     </script>
   </body>
