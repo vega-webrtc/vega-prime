@@ -50,35 +50,37 @@ the following would produce the simplest video chat application.
 
 ### Public API
 
-The following methods can be chained together;
-they return the VegaPrime instance.
-
 #### Callback argument objects
 
-##### wrapped stream
+##### Wrapped stream
 
 Wrapped streams are simple objects with a `stream` and `streamUrl` properties.
 The value of the `stream` property is a [`MediaStream`](http://www.w3.org/TR/mediacapture-streams/#idl-def-MediaStream)
-object. The value of the `streamUrl` property is a url with which you can set
-the `src` property of a video tag and display the local video feed.
+object. The value of the `streamUrl` property is a url string with which you can set
+the `src` property of a video tag to display the local video feed.
 
-```javascript
+```js
 { stream: MediaStream, streamUrl: [url string] }
 ```
 
 Callbacks passed to `#onLocalStreamReceived` are called with a wrapped stream.
 
-#### Constructor
+#### Methods
+
+The following methods can be chained together;
+they return the VegaPrime instance.
+
+##### Constructor
 
 *To do*
 
-#### `#onLocalStreamReceived(callback)`
+##### `#onLocalStreamReceived(callback)`
 
 This sets a callback that is triggered when the local media
 (video/audio) stream is received by the browser. The callback
 is called with a wrapped stream.
 
-#### `#onStreamAdded`
+##### `#onStreamAdded`
 
 This is triggered when a peer in your room has established a
 peer-to-peer stream. The callback is passed a peer object that
