@@ -93,13 +93,13 @@ they return the VegaPrime instance.
 
 This sets a callback that is triggered when the local media
 (video/audio) stream is received by the browser. The callback
-is called with a [wrapped stream](https://github.com/davejachimiak/vega-prime#wrapped-stream).
+is called with a [wrapped stream](#wrapped-stream).
 
 ##### `#onStreamAdded`
 
 This sets a callback that is triggered when a peer-to-peer
 media stream has been established with a peer in the room.
-The callback is called with a [peer](https://github.com/davejachimiak/vega-prime#peer)
+The callback is called with a [peer](#peer)
 object of the peer whose stream was added.
 
 ##### `#onPeerRemoved`
@@ -133,7 +133,7 @@ Callbacks passed to `#onLocalStreamReceived` are called with a wrapped stream.
 
 Peers are simple objects with `badge`, `peerId`, `stream`,
 and `streamUrl` properties. The value of the `badge` property
-is the peer's [badge](https://github.com/davejachimiak/vega-prime#badge).
+is the peer's [badge](#badge).
 The value of the `peerId` is a unique id given to the peer by the Vega Server.
 The value of the `stream` property is a
 [`MediaStream`](http://www.w3.org/TR/mediacapture-streams/#idl-def-MediaStream)
