@@ -62,7 +62,7 @@ This must be the url of your Vega Server.
 
 ##### `roomId`
 
-This should be a string. Peers of equal room ids
+This must be a string. Peers of equal room ids
 will be joined in a "room" and their media streams will be shared.
 
 It's up to your application to decide how users get the same `roomId`.
