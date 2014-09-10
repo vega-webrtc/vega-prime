@@ -10,7 +10,7 @@ Vega Prime is layer of abstraction on top of
 which is responsible for initiating and storing WebRTC connections
 between peers.
 
-The use-case driving Vega Prime as an abstraction is to create peer connections
+The use-case driving Vega Prime as an abstraction is creating peer connections
 immediately after a user gives access to their camera and microphone
 to the browser. It achieves this by telling Vega Observatory to create
 and send `WebRTCSessionDescription`s (through `offer`s) when the initial
