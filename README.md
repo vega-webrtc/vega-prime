@@ -133,9 +133,10 @@ Callbacks passed to `#onLocalStreamReceived` are called with a wrapped stream.
 
 Peers are simple objects with `badge`, `peerId`, `stream`,
 and `streamUrl` properties. The value of the `badge` property
-is the peer's [badge](link to badge). The value of the `peerId`
-is a unique id given to the peer by the Vega Server. The value of the
-`stream` property is a [`MediaStream`](http://www.w3.org/TR/mediacapture-streams/#idl-def-MediaStream)
+is the peer's [badge](https://github.com/davejachimiak/vega-prime/tree/add_documentation#badge).
+The value of the `peerId` is a unique id given to the peer by the Vega Server.
+The value of the `stream` property is a
+[`MediaStream`](http://www.w3.org/TR/mediacapture-streams/#idl-def-MediaStream)
 object. The value of the `streamUrl` property is a url string with
 which you can set the `src` property of a video tag to display the
 peer's video feed.
