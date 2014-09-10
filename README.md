@@ -13,8 +13,8 @@ between peers.
 The use-case driving Vega Prime as an abstraction is creating peer connections
 immediately after a user gives access to their camera and microphone
 to the browser. It achieves this by telling Vega Observatory to create
-and send `WebRTCSessionDescription`s (through `offer`s) when the initial
-call to the Vega Server has been accepted.
+and send `WebRTCSessionDescription`s (through `offer`s) to known peers
+when the initial call to the Vega Server has been accepted.
 
 ## Usage
 
