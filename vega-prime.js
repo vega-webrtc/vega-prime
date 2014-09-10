@@ -16,7 +16,6 @@
         url: this.options.url,
         roomId: this.options.roomId,
         badge: this.options.badge,
-        localStream: this.options.localStream,
         peerConnectionConfig: this.options.peerConnectionConfig
       });
       this.getUserMedia = this.options.getUserMedia || require('get-user-media');

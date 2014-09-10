@@ -93,7 +93,37 @@ they return the VegaPrime instance.
 
 ##### Constructor
 
-*To do*
+An object must be passed to the constructor.
+The `url`, `roomId`, and `badge` are mandatory
+properties, while `peerConnectionConfig` is optional.
+
+###### `url`
+
+This must be the url of your Vega Server.
+
+###### `roomId`
+
+This should be a string. Peers of equal room ids
+will be joined in a "room" and their media streams will be shared.
+
+It's up to your application to decide how users get the same `roomId`.
+You may want all users to be in the same room. Or you may want give
+a group of users a different `roomId` than another group of users.
+Or you may want to let users choose what their room is called and
+redirect to url with that name in a parameter so that they can share that
+link (and, therefore, room) with other users with which they want
+to chat.
+
+In any case, it's up to your application what the `roomId` will be.
+
+###### `badge`
+
+This must be an object. It's meant to share identifying information
+with peers. It's form should be consistent across your application so
+that peers can reliably access each other's information and deal with it as
+they like. For example, your application may want to display a peer's
+name next to their video stream. Or, it may want to record that a stream
+was established between users in the application's database.
 
 ##### `#onLocalStreamReceived(callback)`
 
@@ -121,3 +151,5 @@ in the Websocket connection to the Vega Server in
 [Vega Client](https://github.com/davejachimiak/vega-client).
 
 ## Internals 
+
+*To do*

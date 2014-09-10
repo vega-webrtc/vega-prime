@@ -7,7 +7,6 @@ class VegaPrime
         url: @options.url
         roomId: @options.roomId
         badge: @options.badge
-        localStream: @options.localStream
         peerConnectionConfig: @options.peerConnectionConfig
 
     @getUserMedia = @options.getUserMedia || require('get-user-media')
