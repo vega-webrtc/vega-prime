@@ -29,6 +29,26 @@
       setTimeout(this.init, 0);
     }
 
+    VegaPrime.prototype.onStreamAdded = function(f) {
+      this.observatory.onStreamAdded(f);
+      return this;
+    };
+
+    VegaPrime.prototype.onPeerRemoved = function(f) {
+      this.observatory.onPeerRemoved(f);
+      return this;
+    };
+
+    VegaPrime.prototype.onLocalStreamReceived = function(f) {
+      this.on('localStreamReceived', f);
+      return this;
+    };
+
+    VegaPrime.prototype.onClientWebsocketError = function(f) {
+      this.observatory.on('clientWebsocketError', f);
+      return this;
+    };
+
     VegaPrime.prototype.init = function() {
       return this.getUserMedia(this.userMediaConstraints, this.getUserMediaCallback);
     };
@@ -59,26 +79,6 @@
 
     VegaPrime.prototype._localStreamError = function(error) {
       return this.trigger('localStreamError', error);
-    };
-
-    VegaPrime.prototype.onStreamAdded = function(f) {
-      this.observatory.onStreamAdded(f);
-      return this;
-    };
-
-    VegaPrime.prototype.onPeerRemoved = function(f) {
-      this.observatory.onPeerRemoved(f);
-      return this;
-    };
-
-    VegaPrime.prototype.onLocalStreamReceived = function(f) {
-      this.on('localStreamReceived', f);
-      return this;
-    };
-
-    VegaPrime.prototype.onClientWebsocketError = function(f) {
-      this.observatory.on('clientWebsocketError', f);
-      return this;
     };
 
     VegaPrime.prototype._setObservatoryCallbacks = function() {

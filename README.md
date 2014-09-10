@@ -103,8 +103,21 @@ is called with a wrapped stream.
 
 ##### `#onStreamAdded`
 
-This is triggered when a peer in your room has established a
-peer-to-peer stream. The callback is passed a peer object that
-contains a `peerId`, a `stream`, a `streamUrl`, and a `badge`.
+This sets a callback that is triggered when a peer-to-peer
+media stream has been established with a peer in the room.
+The callback is called with a peer object of the peer whose
+stream was added.
+
+##### `#onPeerRemoved`
+
+This sets a callback that is triggered when a peer leaves the
+room. The callback is called with a peer object of the peer
+that left the room.
+
+##### `#onClientWebsocketError`
+
+This sets a callback that is triggered if there is some error
+in the Websocket connection to the Vega Server in
+[Vega Client](https://github.com/davejachimiak/vega-client).
 
 ## Internals 

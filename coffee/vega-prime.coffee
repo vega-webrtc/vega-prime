@@ -20,6 +20,22 @@ class VegaPrime
     @_setObservatoryCallbacks()
     setTimeout @init, 0
 
+  onStreamAdded: (f) ->
+    @observatory.onStreamAdded(f)
+    this
+
+  onPeerRemoved: (f) ->
+    @observatory.onPeerRemoved(f)
+    this
+
+  onLocalStreamReceived: (f) ->
+    @on 'localStreamReceived', f
+    this
+
+  onClientWebsocketError: (f) ->
+    @observatory.on 'clientWebsocketError', f
+    this
+
   init: =>
     @getUserMedia(@userMediaConstraints, @getUserMediaCallback)
 
@@ -42,22 +58,6 @@ class VegaPrime
 
   _localStreamError: (error) =>
     @trigger 'localStreamError', error
-
-  onStreamAdded: (f) ->
-    @observatory.onStreamAdded(f)
-    this
-
-  onPeerRemoved: (f) ->
-    @observatory.onPeerRemoved(f)
-    this
-
-  onLocalStreamReceived: (f) ->
-    @on 'localStreamReceived', f
-    this
-
-  onClientWebsocketError: (f) ->
-    @observatory.on 'clientWebsocketError', f
-    this
 
   _setObservatoryCallbacks: ->
     @observatory.on 'callAccepted', (peers) =>
