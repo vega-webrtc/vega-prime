@@ -66,7 +66,7 @@ This must be a string. Peers of equal room ids
 will be joined in a "room" and their media streams will be shared.
 
 It's up to your application to decide how users get the same `roomId`.
-You may want all users to be in the same room. Or you may want give
+You may want all users to be in the same room. Or you may want to give
 a group of users a different `roomId` than another group of users.
 Or you may want to let users choose what their room is called and
 redirect to url with that name in a parameter so that they can share that
