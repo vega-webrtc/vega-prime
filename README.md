@@ -10,11 +10,11 @@ Vega Prime is layer of abstraction on top of
 which is responsible for initiating and storing WebRTC connections
 between peers.
 
-The use-case driving Vega Prime as an abstraction is creating peer connections
-immediately after a user gives access to their camera and microphone
-to the browser. It achieves this by telling Vega Observatory to create
-and send `WebRTCSessionDescription`s (through `offer`s) to known peers
-when the initial call to the Vega Server has been accepted.
+The use-case driving Vega Prime as an abstraction is in creating peer
+connections immediately after the user gives access to their camera
+and microphone to the browser. It achieves this by telling Vega Observatory
+to create and send `WebRTCSessionDescription`s (through `offer`s) to known
+peers when the initial call to the Vega Server has been accepted.
 
 ## Usage
 
@@ -165,3 +165,19 @@ with a peer.
 ## Internals 
 
 *To do*
+
+## To Do
+
+* Allow for local stream to be passed into constructor in addition to
+  current functionality (get the media stream from within Vega Prime)
+
+## Contributing
+
+This is written in coffeescript. Run `npm test` to compile the coffee to js
+and run the tests.
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
