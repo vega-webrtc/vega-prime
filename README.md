@@ -1,11 +1,11 @@
 # Vega Prime
 
+This is a work in progress.
+
 Vega Prime is a JavaScript library for handling peer-to-peer
 media streams in the browser.
 Use it in conjunction with the signaling server:
 [Vega Server](https://github.com/davejachimiak/vega_server).
-
-This is a work in progress.
 
 Vega Prime is layer of abstraction on top of
 [Vega Observatory](https://github.com/davejachimiak/vega-observatory),
