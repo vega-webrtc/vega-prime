@@ -88,14 +88,14 @@ to chat.
 
 In any case, it's up to your application what the `roomId` will be.
 
-###### `badge`
+##### `badge`
 
-This must be an object. It's meant to share identifying information
+This must be an object. It's purpose is to share identifying information
 with peers. It's form should be consistent across your application so
 that peers can reliably access each other's information and deal with it as
 they like. For example, your application may want to display a peer's
-name next to their video stream. Or, it may want to record that a stream
-was established between users in the application's database.
+name next to their video stream. Or, it may want to send a message to some
+internal service that a stream was established between users.
 
 #### Methods
 
