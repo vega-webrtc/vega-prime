@@ -106,20 +106,20 @@ This sets a callback that is triggered when the local media
 (video/audio) stream is received by the browser. The callback
 is called with a [wrapped stream](#wrapped-stream).
 
-##### `#onStreamAdded`
+##### `#onStreamAdded(callback)`
 
 This sets a callback that is triggered when a peer-to-peer
 media stream has been established with a peer in the room.
 The callback is called with a [peer](#peer)
 object of the peer whose stream was added.
 
-##### `#onPeerRemoved`
+##### `#onPeerRemoved(callback)`
 
 This sets a callback that is triggered when a peer leaves the
 room. The callback is called with a peer object of the peer
 that left the room.
 
-##### `#onClientWebsocketError`
+##### `#onClientWebsocketError(callback)`
 
 This sets a callback that is triggered if there is some error
 in the Websocket connection to the Vega Server in
@@ -129,13 +129,13 @@ in the Websocket connection to the Vega Server in
 
 ##### Wrapped stream
 
-Wrapped streams are simple objects with `stream` and `streamUrl` properties.
+Wrapped streams are simple objects with `stream` and `url` properties.
 The value of the `stream` property is a [`MediaStream`](http://www.w3.org/TR/mediacapture-streams/#idl-def-MediaStream)
-object. The value of the `streamUrl` property is a url string with which you can set
+object. The value of the `url` property is a url string with which you can set
 the `src` property of a video tag to display the local video feed.
 
 ```javascript
-{ stream: MediaStream, streamUrl: "a blob url representing the stream" }
+{ stream: MediaStream, url: "a blob url representing the stream" }
 ```
 
 Callbacks passed to `#onLocalStreamReceived` are called with a wrapped stream.
