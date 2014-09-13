@@ -5,6 +5,8 @@ media streams in the browser.
 Use it in conjunction with the signaling server:
 [Vega Server](https://github.com/davejachimiak/vega_server).
 
+This is a work in progress.
+
 Vega Prime is layer of abstraction on top of
 [Vega Observatory](https://github.com/davejachimiak/vega-observatory),
 which is responsible for initiating and storing WebRTC connections
