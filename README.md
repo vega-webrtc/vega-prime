@@ -170,6 +170,8 @@ with a peer.
 
 ## To Do
 
+* Remove coffeescript, re-write using es6 module syntax
+* Remove browserify, use bower
 * Allow for local stream to be passed into constructor in addition to
   current functionality (get the media stream from within Vega Prime)
 
