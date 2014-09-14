@@ -1,4 +1,4 @@
-VegaObservatory = require('../vega-observatory')
+VegaObservatory = require('vega-observatory')
 
 class VegaPrime
   constructor: (@options) ->

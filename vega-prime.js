@@ -3,7 +3,7 @@
   var VegaObservatory, VegaPrime,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-  VegaObservatory = require('../vega-observatory');
+  VegaObservatory = require('vega-observatory');
 
   VegaPrime = (function() {
     function VegaPrime(options) {

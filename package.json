@@ -13,7 +13,8 @@
     "uglify-js":"~2.4"
   },
   "dependencies": {
-    "get-user-media":"~0.0"
+    "get-user-media":"~0.0",
+    "vega-observatory":"~0.1"
   },
   "scripts": {
     "build":"coffee -o . -c coffee && browserify bundle.js -o vega-prime.bundle.js && uglifyjs vega-prime.bundle.js -o vega-prime.bundle.min.js",
